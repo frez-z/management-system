@@ -3,4 +3,10 @@ project(management_system C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(management_system main.c)
+include_directories(includes)
+# set(HEADER_FILES includes/console.h)
+
+add_executable(
+        ${PROJECT_NAME}
+        main.c includes/sql/sqlite3.c
+)
