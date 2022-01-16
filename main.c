@@ -15,12 +15,6 @@ int main() {
     run[1] = createFileIfNotExist(DB_FILE);
     runSetup(run[0], run[1]);
 
-    sql_open(DB_FILE);
-    int status = createRestaurant("frez_restaurant", "frez", "123456789");
-    printf("\ncreate database status -> %d\n", status);
-    restaurantInfo data = fetchRestaurant();
-    printf("%s", data.name);
-
     getch();
     return 0;
 }
