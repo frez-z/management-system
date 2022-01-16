@@ -8,5 +8,6 @@ include_directories(includes)
 
 add_executable(
         ${PROJECT_NAME}
-        main.c includes/sql/sqlite3.c
+        main.c
+        includes/sql/sqlite3.c
 )
