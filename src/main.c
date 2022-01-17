@@ -1,25 +1,27 @@
 #include <stdio.h>
 #include <conio.h>
-#include "handler/file.h"
-#include "handler/colour.h"
-#include "handler/database.h"
+#include "file_checker.h"
+#include "database.h"
 
 #define DB_FILE "database\\database.sqlite"
 #define DB_DIR "database"
 
-void runSetup(short, short);
+void runSetup(int, int);
 
 int main() {
-    short run[2];
+    int run[2];
     run[0] = createDirIfNotExist(DB_DIR);
     run[1] = createFileIfNotExist(DB_FILE);
     runSetup(run[0], run[1]);
-
+    sql_open(DB_FILE);
+    int result  = databaseSetup();
+    if (!result) printf("%s", databaseError());
+    sql_close();
     getch();
     return 0;
 }
 
-void runSetup(short dir, short file){
+void runSetup(int dir, int file){
     if (dir && file) return; // exit setup as both directory and file exist.
 
     else if (!file && dir) {

@@ -4,10 +4,11 @@ project(management_system C)
 set(CMAKE_C_STANDARD 11)
 
 include_directories(includes)
-# set(HEADER_FILES includes/console.h)
 
 add_executable(
         ${PROJECT_NAME}
-        main.c
-        includes/sql/sqlite3.c
+        src/main.c  # main event
+        src/resource/sqlite3.c   # sqlite library
+        src/resource/database.c  # handle database query
+        src/resource/file_checker.c # checks file/directory existent
 )

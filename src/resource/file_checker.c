@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <stdio.h>
 
-short createFileIfNotExist(char *fileName){
+int createFileIfNotExist(char *fileName){
     // return 1 if file exist and 0 if not exist.
 
     if(fopen(fileName, "rb+") == NULL) {
@@ -12,7 +12,7 @@ short createFileIfNotExist(char *fileName){
     return 1;
 }
 
-short createDirIfNotExist(char *directory){
+int createDirIfNotExist(char *directory){
     // return 1 if directory exist and 0 if not exist.
-    return (short)mkdir(directory);
+    return mkdir(directory);
 }

@@ -1,51 +1,27 @@
-#include <sql/sqlite3.h>
+//
+// Created by Farez on 18/1/2022.
+//
+
+#include "sql/sqlite3.h"
+#include "database.h"
 #include <stdio.h>
 
 sqlite3 *db;
 sqlite3_stmt *stmt;
 char *db_error; // global db error message
 
-/* hold table information */
-typedef struct resTables {
-    unsigned int id;
-    unsigned short status; // 0 = unavailable, 1 = available
-    unsigned int resit_id; // customer resit id
-} resTables;
-
-/* hold food or drink information */
-typedef struct resInventory {
-    unsigned int id; // unique id
-    const unsigned char *item_name;
-    double price;
-    unsigned int quantity;
-} resInventory;
-
-/* hold customer information */
-typedef struct resCustomer {
-    unsigned int resit_id; // unique id
-    int table;
-    double bill;
-    int status;
-} resCustomer;
-
-/* open a new connection to database */
 void sql_open(char *fileDir){
     sqlite3_open(fileDir, &db);
 }
 
-/* close the connection to database */
 void sql_close(void){
     sqlite3_close(db);
 }
 
-/*
- * create new database for restaurant
- * table created: 'items', 'tables' and 'customer'
- *
- * return value:
- *       1 = execution success
- *       0 = execution fail
- */
+char* databaseError(){
+    return db_error;
+}
+
 int databaseSetup(void){
     int result;
     result = sqlite3_exec(db, "CREATE TABLE inventory (id INT PRIMARY KEY, item_name TEXT, price REAL, quantity INT);", NULL, NULL, &db_error);
@@ -54,7 +30,7 @@ int databaseSetup(void){
     result = sqlite3_exec(db, "CREATE TABLE tables (id INT PRIMARY KEY, resit_id INT, status INT);", NULL, NULL, &db_error);
     if (result != SQLITE_OK) return 0;
 
-    result = sqlite3_exec(db, "CREATE TABLE customer (resit_id INT PRIMARY KEY AUTOINCREMENT, bill REAL, status INT);", NULL, NULL, &db_error);
+    result = sqlite3_exec(db, "CREATE TABLE customer (resit_id INTEGER PRIMARY KEY AUTOINCREMENT, bill REAL, status INT);", NULL, NULL, &db_error);
     if (result != SQLITE_OK) return 0;
 
     result = sqlite3_exec(db, "INSERT INTO customer VALUES (123455, NULL, NULL)", NULL, NULL, &db_error);
@@ -65,16 +41,6 @@ int databaseSetup(void){
 
 // function for table ---------------------------------
 
-/*
- * populated table 'tables' with default value data
- *
- * argument:
- *      quantity: quantity table in the restaurant
- *
- * return value:
- *       0 : execution success
- *       return value >= 0 : rows of data successfully added into database
- */
 int tablesRegister(int quantity){
     char string[100];
     int result;
@@ -88,13 +54,6 @@ int tablesRegister(int quantity){
     return -1;
 }
 
-/*
- * update 'tables' data
- *
- * return value:
- *       1 : execution success
- *       0 : execution fail
- */
 int tablesUpdate(int table_id, int resit_id, int status){
     char string[100];
     int result;
@@ -105,24 +64,18 @@ int tablesUpdate(int table_id, int resit_id, int status){
     return 1;
 }
 
-/*
- * fetch information of selected table id
- *
- * return value:
- *       resTables struct
- */
-resTables tablesFetch(int table_id){
+int tablesFetch(resTables* table,int table_id){
     stmt = NULL;
     char query[100];
     sprintf(query,"SELECT * FROM tables WHERE id = %d;", table_id);
     sqlite3_prepare_v2(db, query, -1, &stmt, 0);
     sqlite3_step(stmt);
-    resTables table;
-    table.id = sqlite3_column_int(stmt, 0);
-    table.resit_id = sqlite3_column_int(stmt, 1);
-    table.status = sqlite3_column_int(stmt, 2);
+    if (sqlite3_column_type(stmt, 0) == SQLITE_NULL) return 0;
+    table->id = sqlite3_column_int(stmt, 0);
+    table->resit_id = sqlite3_column_int(stmt, 1);
+    table->status = sqlite3_column_int(stmt, 2);
 
-    return table;
+    return 1;
 }
 
 // function for inventory -----------------------------
@@ -154,19 +107,19 @@ int inventorySetPrice(short id, short quantity){
     return 1;
 }
 
-resInventory inventoryFetch(int id){
+int inventoryFetch(resInventory *item,int id){
     stmt = NULL;
     char query[100];
     sprintf(query,"SELECT * FROM inventory WHERE id = %d;", id);
     sqlite3_prepare_v2(db, query, -1, &stmt, 0);
     sqlite3_step(stmt);
-    resInventory item;
-    item.id = sqlite3_column_int(stmt, 0);
-    item.item_name = sqlite3_column_text(stmt, 1);
-    item.price = sqlite3_column_double(stmt, 2);
-    item.quantity = sqlite3_column_int(stmt, 3);
+    if (sqlite3_column_type(stmt, 0) == SQLITE_NULL) return 0;
+    item->id = sqlite3_column_int(stmt, 0);
+    item->item_name = sqlite3_column_text(stmt, 1);
+    item->price = sqlite3_column_double(stmt, 2);
+    item->quantity = sqlite3_column_int(stmt, 3);
 
-    return item;
+    return 1;
 }
 
 // function for customer ------------------------------
