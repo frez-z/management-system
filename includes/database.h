@@ -5,7 +5,7 @@
 #ifndef MANAGEMENT_SYSTEM_DATABASE_H
 #define MANAGEMENT_SYSTEM_DATABASE_H
 
-#include "sqlite3.h"
+#include "sql/sqlite3.h"
 
 /* hold table information */
 typedef struct resTables {
