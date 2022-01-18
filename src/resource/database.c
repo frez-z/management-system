@@ -26,15 +26,19 @@ int databaseSetup(void){
     int result;
     result = sqlite3_exec(db, "CREATE TABLE inventory (id INT PRIMARY KEY, item_name TEXT, price REAL, quantity INT);", NULL, NULL, &db_error);
     if (result != SQLITE_OK) return 0;
+    printf(">> table 'inventory' created in database\n");
 
     result = sqlite3_exec(db, "CREATE TABLE tables (id INT PRIMARY KEY, resit_id INT, status INT);", NULL, NULL, &db_error);
     if (result != SQLITE_OK) return 0;
+    printf(">> table 'tables' created in database\n");
 
     result = sqlite3_exec(db, "CREATE TABLE customer (resit_id INTEGER PRIMARY KEY AUTOINCREMENT, bill REAL, status INT);", NULL, NULL, &db_error);
     if (result != SQLITE_OK) return 0;
+    printf(">> table 'customer' created in database\n");
 
-    result = sqlite3_exec(db, "INSERT INTO customer VALUES (123455, NULL, NULL)", NULL, NULL, &db_error);
-    if (result != SQLITE_OK) return 0; // create useless row to start autoincrement from 123455 instead of 0
+    result = sqlite3_exec(db, "INSERT INTO customer VALUES (100000, NULL, 1)", NULL, NULL, &db_error);
+    if (result != SQLITE_OK) return 0; // create useless row to start autoincrement from 10000 instead of 0
+    printf(">> populated useless row to start autoincrement from 100000\n");
 
     return 1;
 }
@@ -44,7 +48,7 @@ int databaseSetup(void){
 int tablesRegister(int quantity){
     char string[100];
     int result;
-    for (int i = 0; i < quantity; ++i) {
+    for (int i = 1; i <= quantity; ++i) {
 
         sprintf(string,"INSERT INTO tables VALUES (%d, NULL, 0);", i);
         result =sqlite3_exec(db, string, NULL, NULL, &db_error);
