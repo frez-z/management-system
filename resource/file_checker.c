@@ -3,10 +3,13 @@
 #include <stdio.h>
 
 int createFileIfNotExist(char *fileName){
-    // return 1 if file exist and 0 if not exist.
+    FILE *fp;
+    fp = fopen(fileName, "rb+"); // check if file exist
+    fclose(fp); // close file stream
 
-    if(fopen(fileName, "rb+") == NULL) {
-        fopen(fileName, "wb"); // create file if not exist yet.
+    if(fp == NULL) {
+        fp = fopen(fileName, "wb"); // create new file
+        fclose(fp); // close file stream again
         return 0;
     }
     return 1;

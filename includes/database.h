@@ -41,38 +41,43 @@ char* databaseError(void);
 
 /*
  * create new database for restaurant
- * table created: 'items', 'tables' and 'customer'
+ * argument:-
+ * 1 = inventory, 2 = tables
+ * 3 = customer, 4 = useless data
  *
- * return value:
- *       1 = execution success
- *       0 = execution fail
+ * return value:-
+ * 1 = success
+ * 0 = fail
  */
-int databaseSetup(void);
+int databaseCreate(int table);
 
 /*
- * populated table 'tables' with default value data
+ * add tables information into database
  *
- * return value:
- *       0 : execution success
- *       return value >= 0 : rows of data successfully added into database
+ * return value:-
+ * 1 = success
+ * 0 = fail
  */
 int tablesRegister(int quantity);
 
 /*
- * update 'tables' data
+ * update tables information
+ * argument:-
+ * table_id = table number, resit_id = customer resit number
+ * status: 1 = unavailable, 0 = available
  *
- * return value:
- *       1 : execution success
- *       0 : execution fail
+ * return value:-
+ * 1 = success
+ * 0 = fail
  */
 int tablesUpdate(int table_id, int resit_id, int status);
 
 /*
- * fetch information of selected table id
+ * fetch information from the selected table
  *
- * return value:
- *       1 : table found
- *       0 : table not found
+ * return value:-
+ * 1 = found
+ * 0 = not found
  */
 int tablesFetch(resTables* table,int table_id);
 
@@ -80,55 +85,55 @@ int tablesFetch(resTables* table,int table_id);
  * add new inventory into restaurant
  * Note!! to update quantity used inventorySetQuantity() instead
  *
- * return value:
- *       1 : execution success
- *       0 : execution fail
+ * return value:-
+ * 1 = success
+ * 0 = fail
  */
-int inventorAddyStock(const unsigned char *item_name, double price,unsigned int quantity);
+int inventoryAddStock(char *item_name, double price,int quantity);
 
 /*
  * update inventory quantity as customer buy or the administrator restock the inventory
  *
- * return value:
- *       1 : execution success
- *       0 : execution fail
+ * return value:-
+ * 1 = success
+ * 0 = fail
  */
 int inventorySetQuantity(short id, short quantity);
 
 /*
  * update inventory price ( admin function interface )
  *
- * return value:
- *       1 : execution success
- *       0 : execution fail
+ * return value:-
+ * 1 = success
+ * 0 = fail
  */
-int inventorySetPrice(short id, short quantity);
+int inventorySetPrice(short id, short price);
 
 /*
  * fetch information of selected inventory
  * if inventory not found. the function return 0
  *
- * return value:
- *       1 : inventory found
- *       0 : inventory not found
+ * return value:-
+ * 1 = found
+ * 0 = not found
  */
 int inventoryFetch(resInventory *item,int id);
 
 /*
- * add customer into database
+ * generate resit then save it into database
  *
- * return value:
- *       1 : execution success
- *       0 : execution fail
+ * return value:-
+ * 1 = success
+ * 0 = fail
  */
 int customerGenerateBill(resCustomer *customer,double price, int table_id);
 
 /*
  * fetch customer information from database
  *
- * return value:
- *       1 : execution success
- *       0 : execution fail
+ * return value:-
+ * 1 = success
+ * 0 = fail
  */
 int customerInfo(resCustomer *customer, int resit_id);
 

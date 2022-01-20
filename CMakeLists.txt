@@ -5,10 +5,18 @@ set(CMAKE_C_STANDARD 11)
 
 include_directories(includes)
 
-add_executable(
-        ${PROJECT_NAME}
-        src/main.c  # main event
-        src/resource/sqlite3.c   # sqlite library
-        src/resource/database.c  # handle database query
-        src/resource/file_checker.c # checks file/directory existent
+set(    COMMON_SOURCES
+        resource/sqlite3.c   # sqlite library
+        resource/database.c  # handle database query
+        resource/file_checker.c # checks file/directory existent
 )
+
+set(TARGET_SOURCES src/main.c)
+
+set(TEST_SOURCES
+        test/main_test.c
+        resource/test.c
+        )
+
+add_executable(application ${COMMON_SOURCES} ${TARGET_SOURCES})
+add_executable(tests ${COMMON_SOURCES} ${TEST_SOURCES})
