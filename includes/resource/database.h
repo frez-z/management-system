@@ -1,6 +1,4 @@
-//
-// Created by Farez on 18/1/2022.
-//
+// Created by Farez
 
 #ifndef MANAGEMENT_SYSTEM_DATABASE_H
 #define MANAGEMENT_SYSTEM_DATABASE_H

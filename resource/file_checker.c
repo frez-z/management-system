@@ -1,6 +1,9 @@
+// Created by Farez
+
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
+#include "file_checker.h"
 
 int createFileIfNotExist(char *fileName){
     FILE *fp;

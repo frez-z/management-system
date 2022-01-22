@@ -1,6 +1,4 @@
-//
-// Created by Farez on 18/1/2022.
-//
+// Created by Farez
 
 #include "sql/sqlite3.h"
 #include "database.h"

@@ -1,11 +1,13 @@
+// Created by Farez
+
 #include <conio.h>
 
-#include "database.h"
-#include "file_checker.h"
-#include "test/test.h"
+#include "resource/database.h"
+#include "resource/file_checker.h"
+#include "resource/test.h"
 
-#define DB_FILE "database\\database.sqlite"
-#define DB_DIR "database"
+#define DB_FILE "test_database\\test_database.sqlite"
+#define DB_DIR "test_database"
 
 void runSetup();
 

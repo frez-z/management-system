@@ -1,7 +1,8 @@
-//
-// Created by Farez on 20/1/2022.
-//
+// Created by Farez
+
 #include <stdio.h>
+#include "test.h"
+
 #define BR "\n"
 #define RED "\033[91m"
 #define GREEN "\033[92m"

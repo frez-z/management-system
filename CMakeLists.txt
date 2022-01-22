@@ -4,6 +4,7 @@ project(management_system C)
 set(CMAKE_C_STANDARD 11)
 
 include_directories(includes)
+include_directories(includes/resource)
 
 set(    COMMON_SOURCES
         resource/sqlite3.c   # sqlite library

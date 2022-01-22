@@ -1,6 +1,5 @@
-//
-// Created by Farez on 20/1/2022.
-//
+
+// Created by Farez
 
 #ifndef MANAGEMENT_SYSTEM_TEST_H
 #define MANAGEMENT_SYSTEM_TEST_H
