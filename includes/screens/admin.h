@@ -1,0 +1,8 @@
+//
+// Created by Farez on 22/1/2022.
+//
+
+#ifndef MANAGEMENT_SYSTEM_ADMIN_H
+#define MANAGEMENT_SYSTEM_ADMIN_H
+
+#endif //MANAGEMENT_SYSTEM_ADMIN_H

@@ -7,7 +7,7 @@
 
 /* hold table information */
 typedef struct resTables {
-    unsigned int id;
+    unsigned int id; // table number
     unsigned short status; // 0 = unavailable, 1 = available
     unsigned int resit_id; // customer resit id
 } resTables;
@@ -25,7 +25,7 @@ typedef struct resCustomer {
     unsigned int resit_id; // unique id
     int table;
     double bill;
-    int status;
+    int status; // 0 dah bayar, 1 belum bayar
 } resCustomer;
 
 /* open a new connection to database */
@@ -62,7 +62,7 @@ int tablesRegister(int quantity);
  * update tables information
  * argument:-
  * table_id = table number, resit_id = customer resit number
- * status: 1 = unavailable, 0 = available
+ * table : 0 = unavailable, 1 = available
  *
  * return value:-
  * 1 = success

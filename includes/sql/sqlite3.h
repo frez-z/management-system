@@ -51,10 +51,10 @@ extern "C" {
 ** compiler that the target identifier should have external linkage.
 **
 ** The SQLITE_CDECL macro is used to set the calling convention for
-** public functions that accept a variable number of arguments.
+** public screens that accept a variable number of arguments.
 **
 ** The SQLITE_APICALL macro is used to set the calling convention for
-** public functions that accept a fixed number of arguments.
+** public screens that accept a fixed number of arguments.
 **
 ** The SQLITE_STDCALL macro is no longer used and is now deprecated.
 **
@@ -62,7 +62,7 @@ extern "C" {
 ** function pointers.
 **
 ** The SQLITE_SYSAPI macro is used to set the calling convention for
-** functions provided by the operating system.
+** screens provided by the operating system.
 **
 ** Currently, the SQLITE_CDECL, SQLITE_APICALL, SQLITE_CALLBACK, and
 ** SQLITE_SYSAPI macros are used only when building for environments
@@ -202,11 +202,11 @@ SQLITE_API int sqlite3_libversion_number(void);
 ** prefix is omitted from any strings returned by
 ** sqlite3_compileoption_get().
 **
-** ^Support for the diagnostic functions sqlite3_compileoption_used()
+** ^Support for the diagnostic screens sqlite3_compileoption_used()
 ** and sqlite3_compileoption_get() may be omitted by specifying the
 ** [SQLITE_OMIT_COMPILEOPTION_DIAGS] option at compile time.
 **
-** See also: SQL functions [sqlite_compileoption_used()] and
+** See also: SQL screens [sqlite_compileoption_used()] and
 ** [sqlite_compileoption_get()] and the [compile_options pragma].
 */
 #ifndef SQLITE_OMIT_COMPILEOPTION_DIAGS
@@ -434,7 +434,7 @@ SQLITE_API int sqlite3_exec(
 ** CAPI3REF: Result Codes
 ** KEYWORDS: {result code definitions}
 **
-** Many SQLite functions return an integer result code from the set shown
+** Many SQLite screens return an integer result code from the set shown
 ** here in order to indicate success or failure.
 **
 ** New error codes may be added in future versions of SQLite.
@@ -766,7 +766,7 @@ struct sqlite3_file {
 ** integer opcode.  The third argument is a generic pointer intended to
 ** point to a structure that may contain arguments or space in which to
 ** write return values.  Potential uses for xFileControl() might be
-** functions to enable blocking locks with timeouts, to change the
+** screens to enable blocking locks with timeouts, to change the
 ** locking strategy (for example to use dot-file locks), to inquire
 ** about the status of a lock, or to break stale locks.  The SQLite
 ** core reserves all opcodes less than 100 for its own use.
@@ -1413,7 +1413,7 @@ typedef struct sqlite3_api_routines sqlite3_api_routines;
 ** ^The xSetSystemCall(), xGetSystemCall(), and xNestSystemCall() interfaces
 ** are not used by the SQLite core.  These optional interfaces are provided
 ** by some VFSes to facilitate testing of the VFS code. By overriding
-** system calls with functions under its control, a test program can
+** system calls with screens under its control, a test program can
 ** simulate faults and error conditions that would otherwise be difficult
 ** or impossible to induce.  The set of system calls that can be overridden
 ** varies from one VFS to another, and from one version of the same VFS to the
@@ -1683,7 +1683,7 @@ SQLITE_API int sqlite3_db_config(sqlite3*, int op, ...);
 ** conditions.
 **
 ** The xMalloc, xRealloc, and xFree methods must work like the
-** malloc(), realloc() and free() functions from the standard C library.
+** malloc(), realloc() and free() screens from the standard C library.
 ** ^SQLite guarantees that the second argument to
 ** xRealloc is always a value returned by a prior call to xRoundup.
 **
@@ -2361,10 +2361,10 @@ struct sqlite3_mem_methods {
 ** takes additional defensive steps to protect the application from harm
 ** including:
 ** <ul>
-** <li> Prohibit the use of SQL functions inside triggers, views,
+** <li> Prohibit the use of SQL screens inside triggers, views,
 ** CHECK constraints, DEFAULT clauses, expression indexes,
 ** partial indexes, or generated columns
-** unless those functions are tagged with [SQLITE_INNOCUOUS].
+** unless those screens are tagged with [SQLITE_INNOCUOUS].
 ** <li> Prohibit the use of virtual tables inside of triggers or views
 ** unless those virtual tables are tagged with [SQLITE_VTAB_INNOCUOUS].
 ** </ul>
@@ -2502,14 +2502,14 @@ SQLITE_API void sqlite3_set_last_insert_rowid(sqlite3*,sqlite3_int64);
 ** CAPI3REF: Count The Number Of Rows Modified
 ** METHOD: sqlite3
 **
-** ^These functions return the number of rows modified, inserted or
+** ^These screens return the number of rows modified, inserted or
 ** deleted by the most recently completed INSERT, UPDATE or DELETE
 ** statement on the database connection specified by the only parameter.
-** The two functions are identical except for the type of the return value
+** The two screens are identical except for the type of the return value
 ** and that if the number of rows modified by the most recent INSERT, UPDATE
 ** or DELETE is greater than the maximum value supported by type "int", then
 ** the return value of sqlite3_changes() is undefined. ^Executing any other
-** type of SQL statement does not modify the value returned by these functions.
+** type of SQL statement does not modify the value returned by these screens.
 **
 ** ^Only changes made directly by the INSERT, UPDATE or DELETE statement are
 ** considered - auxiliary changes caused by [CREATE TRIGGER | triggers],
@@ -2564,10 +2564,10 @@ SQLITE_API sqlite3_int64 sqlite3_changes64(sqlite3*);
 ** CAPI3REF: Total Number Of Rows Modified
 ** METHOD: sqlite3
 **
-** ^These functions return the total number of rows inserted, modified or
+** ^These screens return the total number of rows inserted, modified or
 ** deleted by all [INSERT], [UPDATE] or [DELETE] statements completed
 ** since the database connection was opened, including those executed as
-** part of trigger programs. The two functions are identical except for the
+** part of trigger programs. The two screens are identical except for the
 ** type of the return value and that if the number of rows modified by the
 ** connection exceeds the maximum value supported by type "int", then
 ** the return value of sqlite3_total_changes() is undefined. ^Executing
@@ -2845,7 +2845,7 @@ SQLITE_API void sqlite3_free_table(char **result);
 /*
 ** CAPI3REF: Formatted String Printing Functions
 **
-** These routines are work-alikes of the "printf()" family of functions
+** These routines are work-alikes of the "printf()" family of screens
 ** from the standard C library.
 ** These routines understand most of the common formatting options from
 ** the standard library printf()
@@ -3001,7 +3001,7 @@ SQLITE_API sqlite3_int64 sqlite3_memory_highwater(int resetFlag);
 ** SQLite contains a high-quality pseudo-random number generator (PRNG) used to
 ** select random [ROWID | ROWIDs] when inserting new records into a table that
 ** already uses the largest possible [ROWID].  The PRNG is also used for
-** the built-in random() and randomblob() SQL functions.  This interface allows
+** the built-in random() and randomblob() SQL screens.  This interface allows
 ** applications to access the same PRNG for other purposes.
 **
 ** ^A call to this routine stores N bytes of randomness into buffer P.
@@ -3190,7 +3190,7 @@ SQLITE_API int sqlite3_set_authorizer(
 ** These routines are deprecated. Use the [sqlite3_trace_v2()] interface
 ** instead of the routines described here.
 **
-** These routines register callback functions that can be used for
+** These routines register callback screens that can be used for
 ** tracing and profiling the execution of SQL statements.
 **
 ** ^The callback function registered by sqlite3_trace() is invoked at
@@ -3838,7 +3838,7 @@ SQLITE_API void sqlite3_free_filename(char*);
 ** ^(Memory to hold the error message string is managed internally.
 ** The application does not need to worry about freeing the result.
 ** However, the error string might be overwritten or deallocated by
-** subsequent calls to other SQLite interface functions.)^
+** subsequent calls to other SQLite interface screens.)^
 **
 ** ^The sqlite3_errstr() interface returns the English-language text
 ** that describes the [result code], as UTF-8.
@@ -4241,7 +4241,7 @@ SQLITE_API const char *sqlite3_normalized_sql(sqlite3_stmt *pStmt);
 ** and only if the [prepared statement] X makes no direct changes to
 ** the content of the database file.
 **
-** Note that [application-defined SQL functions] or
+** Note that [application-defined SQL screens] or
 ** [virtual tables] might change the database indirectly as a side effect.
 ** ^(For example, if an application defines a function "eval()" that
 ** calls [sqlite3_exec()], then the following SQL statement would
@@ -4342,7 +4342,7 @@ SQLITE_API int sqlite3_stmt_busy(sqlite3_stmt*);
 ** sqlite3_value objects even when not strictly required.
 **
 ** ^The sqlite3_value objects that are passed as parameters into the
-** implementation of [application-defined SQL functions] are protected.
+** implementation of [application-defined SQL screens] are protected.
 ** ^The sqlite3_value object returned by
 ** [sqlite3_column_value()] is unprotected.
 ** Unprotected sqlite3_value objects may only be used as arguments
@@ -4358,7 +4358,7 @@ typedef struct sqlite3_value sqlite3_value;
 **
 ** The context in which an SQL function executes is stored in an
 ** sqlite3_context object.  ^A pointer to an sqlite3_context object
-** is always first parameter to [application-defined SQL functions].
+** is always first parameter to [application-defined SQL screens].
 ** The application-defined SQL function implementation will pass this
 ** pointer through into calls to [sqlite3_result_int | sqlite3_result()],
 ** [sqlite3_aggregate_context()], [sqlite3_user_data()],
@@ -4667,18 +4667,18 @@ SQLITE_API const void *sqlite3_column_name16(sqlite3_stmt*, int N);
 ** database, table, and column.
 **
 ** ^The first argument to these interfaces is a [prepared statement].
-** ^These functions return information about the Nth result column returned by
+** ^These screens return information about the Nth result column returned by
 ** the statement, where N is the second function argument.
 ** ^The left-most column is column 0 for these routines.
 **
 ** ^If the Nth column returned by the statement is an expression or
-** subquery and is not a column value, then all of these functions return
+** subquery and is not a column value, then all of these screens return
 ** NULL.  ^These routines might also return NULL if a memory allocation error
 ** occurs.  ^Otherwise, they return the name of the attached database, table,
 ** or column that query result column was extracted from.
 **
 ** ^As with all other SQLite APIs, those whose names end with "16" return
-** UTF-16 encoded strings and the other functions return UTF-8.
+** UTF-16 encoded strings and the other screens return UTF-8.
 **
 ** ^These APIs are only available if the library was compiled with the
 ** [SQLITE_ENABLE_COLUMN_METADATA] C-preprocessor symbol.
@@ -4765,7 +4765,7 @@ SQLITE_API const void *sqlite3_column_decltype16(sqlite3_stmt*,int);
 **
 ** ^If the SQL statement being executed returns any data, then [SQLITE_ROW]
 ** is returned each time a new row of data is ready for processing by the
-** caller. The values may be accessed using the [column access functions].
+** caller. The values may be accessed using the [column access screens].
 ** sqlite3_step() is called again to retrieve the next row of data.
 **
 ** ^[SQLITE_ERROR] means that a run-time error (such as a constraint
@@ -4867,7 +4867,7 @@ SQLITE_API int sqlite3_data_count(sqlite3_stmt *pStmt);
 
 /*
 ** CAPI3REF: Result Values From A Query
-** KEYWORDS: {column access functions}
+** KEYWORDS: {column access screens}
 ** METHOD: sqlite3_stmt
 **
 ** <b>Summary:</b>
@@ -4974,7 +4974,7 @@ SQLITE_API int sqlite3_data_count(sqlite3_stmt *pStmt);
 ** or [sqlite3_value_bytes()], the behavior is not threadsafe.
 ** Hence, the sqlite3_column_value() interface
 ** is normally only useful within the implementation of
-** [application-defined SQL functions] or [virtual tables], not within
+** [application-defined SQL screens] or [virtual tables], not within
 ** top-level application code.
 **
 ** The these routines may attempt to convert the datatype of the result.
@@ -5145,19 +5145,19 @@ SQLITE_API int sqlite3_reset(sqlite3_stmt *pStmt);
 ** KEYWORDS: {function creation routines}
 ** METHOD: sqlite3
 **
-** ^These functions (collectively known as "function creation routines")
-** are used to add SQL functions or aggregates or to redefine the behavior
-** of existing SQL functions or aggregates. The only differences between
+** ^These screens (collectively known as "function creation routines")
+** are used to add SQL screens or aggregates or to redefine the behavior
+** of existing SQL screens or aggregates. The only differences between
 ** the three "sqlite3_create_function*" routines are the text encoding
 ** expected for the second parameter (the name of the function being
 ** created) and the presence or absence of a destructor callback for
 ** the application data pointer. Function sqlite3_create_window_function()
-** is similar, but allows the user to supply the extra callback functions
-** needed by [aggregate window functions].
+** is similar, but allows the user to supply the extra callback screens
+** needed by [aggregate window screens].
 **
 ** ^The first parameter is the [database connection] to which the SQL
 ** function is to be added.  ^If an application uses more than one database
-** connection then application-defined SQL functions must be added
+** connection then application-defined SQL screens must be added
 ** to each database connection separately.
 **
 ** ^The second parameter is the name of the SQL function to be created or
@@ -5190,10 +5190,10 @@ SQLITE_API int sqlite3_reset(sqlite3_stmt *pStmt);
 **
 ** ^The fourth parameter may optionally be ORed with [SQLITE_DETERMINISTIC]
 ** to signal that the function will always return the same result given
-** the same inputs within a single SQL statement.  Most SQL functions are
+** the same inputs within a single SQL statement.  Most SQL screens are
 ** deterministic.  The built-in [random()] SQL function is an example of a
 ** function that is not deterministic.  The SQLite query planner is able to
-** perform additional optimizations on deterministic functions, so use
+** perform additional optimizations on deterministic screens, so use
 ** of the [SQLITE_DETERMINISTIC] flag is recommended where possible.
 **
 ** ^The fourth parameter may also optionally include the [SQLITE_DIRECTONLY]
@@ -5202,10 +5202,10 @@ SQLITE_API int sqlite3_reset(sqlite3_stmt *pStmt);
 ** index expressions, or the WHERE clause of partial indexes.
 **
 ** For best security, the [SQLITE_DIRECTONLY] flag is recommended for
-** all application-defined SQL functions that do not need to be
+** all application-defined SQL screens that do not need to be
 ** used inside of triggers, view, CHECK constraints, or other elements of
 ** the database schema.  This flags is especially recommended for SQL
-** functions that have side effects or reveal internal application state.
+** screens that have side effects or reveal internal application state.
 ** Without this flag, an attacker might be able to modify the schema of
 ** a database file to include invocations of the function with parameters
 ** chosen by the attacker, which the application will then execute when
@@ -5215,8 +5215,8 @@ SQLITE_API int sqlite3_reset(sqlite3_stmt *pStmt);
 ** function can gain access to this pointer using [sqlite3_user_data()].)^
 **
 ** ^The sixth, seventh and eighth parameters passed to the three
-** "sqlite3_create_function*" functions, xFunc, xStep and xFinal, are
-** pointers to C-language functions that implement the SQL function or
+** "sqlite3_create_function*" screens, xFunc, xStep and xFinal, are
+** pointers to C-language screens that implement the SQL function or
 ** aggregate. ^A scalar SQL function requires an implementation of the xFunc
 ** callback only; NULL pointers must be passed as the xStep and xFinal
 ** parameters. ^An aggregate SQL function requires an implementation of xStep
@@ -5231,8 +5231,8 @@ SQLITE_API int sqlite3_reset(sqlite3_stmt *pStmt);
 ** which case a regular aggregate function is created, or must both be
 ** non-NULL, in which case the new function may be used as either an aggregate
 ** or aggregate window function. More details regarding the implementation
-** of aggregate window functions are
-** [user-defined window functions|available here].
+** of aggregate window screens are
+** [user-defined window screens|available here].
 **
 ** ^(If the final parameter to sqlite3_create_function_v2() or
 ** sqlite3_create_window_function() is not NULL, then it is destructor for
@@ -5244,7 +5244,7 @@ SQLITE_API int sqlite3_reset(sqlite3_stmt *pStmt);
 ** data pointer which was the fifth parameter to sqlite3_create_function_v2().
 **
 ** ^It is permitted to register multiple implementations of the same
-** functions with the same name but with either differing numbers of
+** screens with the same name but with either differing numbers of
 ** arguments or differing preferred text encodings.  ^SQLite will use
 ** the implementation that most closely matches the way in which the
 ** SQL function is used.  ^A function implementation with a non-negative
@@ -5256,7 +5256,7 @@ SQLITE_API int sqlite3_reset(sqlite3_stmt *pStmt);
 ** is a closer match than a function where the encoding difference is
 ** between UTF8 and UTF16.
 **
-** ^Built-in functions may be overloaded by new application-defined functions.
+** ^Built-in screens may be overloaded by new application-defined screens.
 **
 ** ^An application-defined function is permitted to call other
 ** SQLite interfaces.  However, such calls must not
@@ -5336,7 +5336,7 @@ SQLITE_API int sqlite3_create_window_function(
 ** [randomblob|randomblob()] is not.  Functions must
 ** be deterministic in order to be used in certain contexts such as
 ** with the WHERE clause of [partial indexes] or in [generated columns].
-** SQLite might also optimize deterministic functions by factoring them
+** SQLite might also optimize deterministic screens by factoring them
 ** out of inner loops.
 ** </dd>
 **
@@ -5346,7 +5346,7 @@ SQLITE_API int sqlite3_create_window_function(
 ** schema structures such as [CHECK constraints], [DEFAULT clauses],
 ** [expression indexes], [partial indexes], or [generated columns].
 ** The SQLITE_DIRECTONLY flags is a security feature which is recommended
-** for all [application-defined SQL functions], and especially for functions
+** for all [application-defined SQL screens], and especially for screens
 ** that have side-effects or that could potentially leak sensitive
 ** information.
 ** </dd>
@@ -5364,12 +5364,12 @@ SQLITE_API int sqlite3_create_window_function(
 ** function that is innocuous but not deterministic.
 ** <p>Some heightened security settings
 ** ([SQLITE_DBCONFIG_TRUSTED_SCHEMA] and [PRAGMA trusted_schema=OFF])
-** disable the use of SQL functions inside views and triggers and in
+** disable the use of SQL screens inside views and triggers and in
 ** schema structures such as [CHECK constraints], [DEFAULT clauses],
 ** [expression indexes], [partial indexes], and [generated columns] unless
-** the function is tagged with SQLITE_INNOCUOUS.  Most built-in functions
+** the function is tagged with SQLITE_INNOCUOUS.  Most built-in screens
 ** are innocuous.  Developers are advised to avoid using the
-** SQLITE_INNOCUOUS flag for application-defined functions unless the
+** SQLITE_INNOCUOUS flag for application-defined screens unless the
 ** function has been carefully audited and found to be free of potentially
 ** security-adverse side-effects and information-leaks.
 ** </dd>
@@ -5378,7 +5378,7 @@ SQLITE_API int sqlite3_create_window_function(
 ** The SQLITE_SUBTYPE flag indicates to SQLite that a function may call
 ** [sqlite3_value_subtype()] to inspect the sub-types of its arguments.
 ** Specifying this flag makes no difference for scalar or aggregate user
-** functions. However, if it is not specified for a user-defined window
+** screens. However, if it is not specified for a user-defined window
 ** function, then any sub-types belonging to arguments passed to the window
 ** function may be discarded before the window function is called (i.e.
 ** sqlite3_value_subtype() will always return 0).
@@ -5394,11 +5394,11 @@ SQLITE_API int sqlite3_create_window_function(
 ** CAPI3REF: Deprecated Functions
 ** DEPRECATED
 **
-** These functions are [deprecated].  In order to maintain
-** backwards compatibility with older code, these functions continue
+** These screens are [deprecated].  In order to maintain
+** backwards compatibility with older code, these screens continue
 ** to be supported.  However, new applications should avoid
-** the use of these functions.  To encourage programmers to avoid
-** these functions, we will not explain what they do.
+** the use of these screens.  To encourage programmers to avoid
+** these screens, we will not explain what they do.
 */
 #ifndef SQLITE_OMIT_DEPRECATED
 SQLITE_API SQLITE_DEPRECATED int sqlite3_aggregate_count(sqlite3_context*);
@@ -5447,14 +5447,14 @@ SQLITE_API SQLITE_DEPRECATED int sqlite3_memory_alarm(void(*)(void*,sqlite3_int6
 **
 ** These routines extract type, size, and content information from
 ** [protected sqlite3_value] objects.  Protected sqlite3_value objects
-** are used to pass parameter information into the functions that
-** implement [application-defined SQL functions] and [virtual tables].
+** are used to pass parameter information into the screens that
+** implement [application-defined SQL screens] and [virtual tables].
 **
 ** These routines work only with [protected sqlite3_value] objects.
 ** Any attempt to use these routines on an [unprotected sqlite3_value]
 ** is not threadsafe.
 **
-** ^These routines work just like the corresponding [column access functions]
+** ^These routines work just like the corresponding [column access screens]
 ** except that these routines take a single [protected sqlite3_value] object
 ** pointer instead of a [sqlite3_stmt*] pointer and an integer column number.
 **
@@ -5587,7 +5587,7 @@ SQLITE_API void sqlite3_value_free(sqlite3_value*);
 ** CAPI3REF: Obtain Aggregate Function Context
 ** METHOD: sqlite3_context
 **
-** Implementations of aggregate SQL functions use this
+** Implementations of aggregate SQL screens use this
 ** routine to allocate memory for storing their state.
 **
 ** ^The first time the sqlite3_aggregate_context(C,N) routine is called
@@ -5659,7 +5659,7 @@ SQLITE_API sqlite3 *sqlite3_context_db_handle(sqlite3_context*);
 ** CAPI3REF: Function Auxiliary Data
 ** METHOD: sqlite3_context
 **
-** These functions may be used by (non-aggregate) SQL functions to
+** These screens may be used by (non-aggregate) SQL screens to
 ** associate metadata with argument values. If the same value is passed to
 ** multiple invocations of the same SQL function during query execution, under
 ** some circumstances the associated metadata may be preserved.  An example
@@ -5739,12 +5739,12 @@ typedef void (*sqlite3_destructor_type)(void*);
 ** METHOD: sqlite3_context
 **
 ** These routines are used by the xFunc or xFinal callbacks that
-** implement SQL functions and aggregates.  See
+** implement SQL screens and aggregates.  See
 ** [sqlite3_create_function()] and [sqlite3_create_function16()]
 ** for additional information.
 **
-** These functions work very much like the [parameter binding] family of
-** functions used to bind values to host parameters in prepared statements.
+** These screens work very much like the [parameter binding] family of
+** screens used to bind values to host parameters in prepared statements.
 ** Refer to the [SQL parameter] documentation for additional information.
 **
 ** ^The sqlite3_result_blob() interface sets the result from
@@ -5760,7 +5760,7 @@ typedef void (*sqlite3_destructor_type)(void*);
 ** an application-defined function to be a floating point value specified
 ** by its 2nd argument.
 **
-** ^The sqlite3_result_error() and sqlite3_result_error16() functions
+** ^The sqlite3_result_error() and sqlite3_result_error16() screens
 ** cause the implemented SQL function to throw an exception.
 ** ^SQLite uses the string pointed to by the
 ** 2nd parameter of sqlite3_result_error() or sqlite3_result_error16()
@@ -5922,7 +5922,7 @@ SQLITE_API void sqlite3_result_subtype(sqlite3_context*,unsigned int);
 ** CAPI3REF: Define New Collating Sequences
 ** METHOD: sqlite3
 **
-** ^These functions add, remove, or modify a [collation] associated
+** ^These screens add, remove, or modify a [collation] associated
 ** with the [database connection] specified as the first argument.
 **
 ** ^The name of the collation is a UTF-8 string
@@ -5950,11 +5950,11 @@ SQLITE_API void sqlite3_result_subtype(sqlite3_context*,unsigned int);
 ** through as the first argument to the collating function callback.
 **
 ** ^The fifth argument, xCompare, is a pointer to the collating function.
-** ^Multiple collating functions can be registered using the same name but
+** ^Multiple collating screens can be registered using the same name but
 ** with different eTextRep parameters and SQLite will use whichever
 ** function requires the least amount of data transformation.
 ** ^If the xCompare argument is NULL then the collating function is
-** deleted.  ^When all collating functions having the same name are deleted,
+** deleted.  ^When all collating screens having the same name are deleted,
 ** that collation is no longer usable.
 **
 ** ^The collating function callback is invoked with a copy of the pArg
@@ -5964,7 +5964,7 @@ SQLITE_API void sqlite3_result_subtype(sqlite3_context*,unsigned int);
 ** function must return an integer that is negative, zero, or positive
 ** if the first string is less than, equal to, or greater than the second,
 ** respectively.  A collating function must always return the same answer
-** given the same inputs.  If two or more collating functions are registered
+** given the same inputs.  If two or more collating screens are registered
 ** to the same collation name (using different eTextRep values) then all
 ** must give an equivalent answer when invoked with equivalent strings.
 ** The collating function must obey the following properties for all
@@ -5984,8 +5984,8 @@ SQLITE_API void sqlite3_result_subtype(sqlite3_context*,unsigned int);
 ** ^The sqlite3_create_collation_v2() works like sqlite3_create_collation()
 ** with the addition that the xDestroy callback is invoked on pArg when
 ** the collating function is deleted.
-** ^Collating functions are deleted when they are overridden by later
-** calls to the collation creation functions or when the
+** ^Collating screens are deleted when they are overridden by later
+** calls to the collation creation screens or when the
 ** [database connection] is closed using [sqlite3_close()].
 **
 ** ^The xDestroy callback is <u>not</u> called if the
@@ -6381,7 +6381,7 @@ SQLITE_API sqlite3_stmt *sqlite3_next_stmt(sqlite3 *pDb, sqlite3_stmt *pStmt);
 ** ^If the callback on a commit hook function returns non-zero,
 ** then the commit is converted into a rollback.
 **
-** ^The sqlite3_commit_hook(D,C,P) and sqlite3_rollback_hook(D,C,P) functions
+** ^The sqlite3_commit_hook(D,C,P) and sqlite3_rollback_hook(D,C,P) screens
 ** return the P argument from the previous call of the same function
 ** on the same [database connection] D, or NULL for
 ** the first call for each function on D.
@@ -7265,9 +7265,9 @@ SQLITE_API int sqlite3_declare_vtab(sqlite3*, const char *zSQL);
 ** CAPI3REF: Overload A Function For A Virtual Table
 ** METHOD: sqlite3
 **
-** ^(Virtual tables can provide alternative implementations of functions
+** ^(Virtual tables can provide alternative implementations of screens
 ** using the [xFindFunction] method of the [virtual table module].
-** But global versions of those functions
+** But global versions of those screens
 ** must exist in order to be overloaded.)^
 **
 ** ^(This API makes sure a global version of a function with a particular
@@ -7351,7 +7351,7 @@ typedef struct sqlite3_blob sqlite3_blob;
 **
 ** ^Unless it returns SQLITE_MISUSE, this function sets the
 ** [database connection] error code and message accessible via
-** [sqlite3_errcode()] and [sqlite3_errmsg()] and related functions.
+** [sqlite3_errcode()] and [sqlite3_errmsg()] and related screens.
 **
 ** A BLOB referenced by sqlite3_blob_open() may be read using the
 ** [sqlite3_blob_read()] interface and modified by using
@@ -7441,7 +7441,7 @@ SQLITE_API int sqlite3_blob_reopen(sqlite3_blob *, sqlite3_int64);
 ** with a null pointer (such as would be returned by a failed call to
 ** [sqlite3_blob_open()]) is a harmless no-op. ^Otherwise, if this function
 ** is passed a valid open blob handle, the values returned by the
-** sqlite3_errcode() and sqlite3_errmsg() functions are set before returning.
+** sqlite3_errcode() and sqlite3_errmsg() screens are set before returning.
 */
 SQLITE_API int sqlite3_blob_close(sqlite3_blob *);
 
@@ -7502,7 +7502,7 @@ SQLITE_API int sqlite3_blob_read(sqlite3_blob *, void *Z, int N, int iOffset);
 ** Otherwise, an  [error code] or an [extended error code] is returned.)^
 ** ^Unless SQLITE_MISUSE is returned, this function sets the
 ** [database connection] error code and message accessible via
-** [sqlite3_errcode()] and [sqlite3_errmsg()] and related functions.
+** [sqlite3_errcode()] and [sqlite3_errmsg()] and related screens.
 **
 ** ^If the [BLOB handle] passed as the first argument was not opened for
 ** writing (the flags parameter to [sqlite3_blob_open()] was zero),
@@ -7727,7 +7727,7 @@ SQLITE_API void sqlite3_mutex_leave(sqlite3_mutex*);
 **   <li>  [sqlite3_mutex_notheld()] </li>
 ** </ul>)^
 **
-** The only difference is that the public sqlite3_XXX functions enumerated
+** The only difference is that the public sqlite3_XXX screens enumerated
 ** above silently ignore any invocations that pass a NULL pointer instead
 ** of a valid mutex handle. The implementations of the methods defined
 ** by this structure are not required to handle this case. The results
@@ -8663,7 +8663,7 @@ struct sqlite3_pcache_page {
 ** All resources associated with the specified cache should be freed. ^After
 ** calling the xDestroy() method, SQLite considers the [sqlite3_pcache*]
 ** handle invalid, and will not use it with any other sqlite3_pcache_methods2
-** functions.
+** screens.
 **
 ** [[the xShrink() page cache method]]
 ** ^SQLite invokes the xShrink() method when it wants the page cache to
@@ -8775,11 +8775,11 @@ typedef struct sqlite3_backup sqlite3_backup;
 ** destination [database connection] D.
 ** ^The error code and message for the failed call to sqlite3_backup_init()
 ** can be retrieved using the [sqlite3_errcode()], [sqlite3_errmsg()], and/or
-** [sqlite3_errmsg16()] functions.
+** [sqlite3_errmsg16()] screens.
 ** ^A successful call to sqlite3_backup_init() returns a pointer to an
 ** [sqlite3_backup] object.
 ** ^The [sqlite3_backup] object may be used with the sqlite3_backup_step() and
-** sqlite3_backup_finish() functions to perform the specified backup
+** sqlite3_backup_finish() screens to perform the specified backup
 ** operation.
 **
 ** [[sqlite3_backup_step()]] <b>sqlite3_backup_step()</b>
@@ -8870,7 +8870,7 @@ typedef struct sqlite3_backup sqlite3_backup;
 ** ^The sqlite3_backup_pagecount() routine returns the total number of pages
 ** in the source database at the conclusion of the most recent
 ** sqlite3_backup_step().
-** ^(The values returned by these functions are only updated by
+** ^(The values returned by these screens are only updated by
 ** sqlite3_backup_step(). If the source database is modified in a way that
 ** changes the size of the source database or the number of pages remaining,
 ** those changes are not reflected in the output of sqlite3_backup_pagecount()
@@ -8969,7 +8969,7 @@ SQLITE_API int sqlite3_backup_pagecount(sqlite3_backup *p);
 ** connection using [sqlite3_close()].
 **
 ** The unlock-notify callback is not reentrant. If an application invokes
-** any sqlite3_xxx API functions from within an unlock-notify callback, a
+** any sqlite3_xxx API screens from within an unlock-notify callback, a
 ** crash or deadlock may be the result.
 **
 ** ^Unless deadlock is detected (see below), sqlite3_unlock_notify() always
@@ -9101,7 +9101,7 @@ SQLITE_API int sqlite3_strlike(const char *zGlob, const char *zStr, unsigned int
 ** used with [sqlite3_snprintf()] to generate the final output string.
 **
 ** The sqlite3_log() interface is intended for use by extensions such as
-** virtual tables, collating functions, and SQL functions.  While there is
+** virtual tables, collating screens, and SQL screens.  While there is
 ** nothing to prevent an application from calling sqlite3_log(), doing so
 ** is considered bad form.
 **
@@ -9612,7 +9612,7 @@ SQLITE_API void sqlite3_stmt_scanstatus_reset(sqlite3_stmt*);
 ** ^Otherwise, if no error occurs, [sqlite3_db_cacheflush()] returns SQLITE_OK.
 **
 ** ^This function does not set the database handle error code or message
-** returned by the [sqlite3_errcode()] and [sqlite3_errmsg()] functions.
+** returned by the [sqlite3_errcode()] and [sqlite3_errmsg()] screens.
 */
 SQLITE_API int sqlite3_db_cacheflush(sqlite3*);
 
@@ -10642,7 +10642,7 @@ SQLITE_API int sqlite3session_diff(
 ** </ul>
 **
 ** A patchset blob may be used with up to date versions of all
-** sqlite3changeset_xxx API functions except for sqlite3changeset_invert(),
+** sqlite3changeset_xxx API screens except for sqlite3changeset_invert(),
 ** which returns SQLITE_CORRUPT if it is passed a patchset. Similarly,
 ** attempting to use a patchset blob with old versions of the
 ** sqlite3changeset_xxx APIs also provokes an SQLITE_CORRUPT error.
@@ -10697,7 +10697,7 @@ SQLITE_API sqlite3_int64 sqlite3session_memory_used(sqlite3_session *pSession);
 ** is returned. Otherwise, if an error occurs, *pp is set to zero and an
 ** SQLite error code is returned.
 **
-** The following functions can be used to advance and query a changeset
+** The following screens can be used to advance and query a changeset
 ** iterator created by this function:
 **
 ** <ul>
@@ -10714,7 +10714,7 @@ SQLITE_API sqlite3_int64 sqlite3session_memory_used(sqlite3_session *pSession);
 **
 ** Assuming the changeset blob was created by one of the
 ** [sqlite3session_changeset()], [sqlite3changeset_concat()] or
-** [sqlite3changeset_invert()] functions, all changes within the changeset
+** [sqlite3changeset_invert()] screens, all changes within the changeset
 ** that apply to a single table are grouped together. This means that when
 ** an application iterates through a changeset using an iterator created by
 ** this function, all changes that relate to a single table are visited
@@ -11103,7 +11103,7 @@ typedef struct sqlite3_changegroup sqlite3_changegroup;
 ** new() and delete(), and in any order.
 **
 ** As well as the regular sqlite3changegroup_add() and
-** sqlite3changegroup_output() functions, also available are the streaming
+** sqlite3changegroup_output() screens, also available are the streaming
 ** versions sqlite3changegroup_add_strm() and sqlite3changegroup_output_strm().
 */
 SQLITE_API int sqlite3changegroup_new(sqlite3_changegroup **pp);
@@ -11196,7 +11196,7 @@ SQLITE_API int sqlite3changegroup_add(sqlite3_changegroup*, int nData, void *pDa
 ** inputs were patchsets, the output is also a patchset.
 **
 ** As with the output of the sqlite3session_changeset() and
-** sqlite3session_patchset() functions, all changes related to a single
+** sqlite3session_patchset() screens, all changes related to a single
 ** table are grouped together in the output of this function. Tables appear
 ** in the same order as for the very first changeset added to the changegroup.
 ** If the second or subsequent changesets added to the changegroup contain
@@ -11226,11 +11226,11 @@ SQLITE_API void sqlite3changegroup_delete(sqlite3_changegroup*);
 /*
 ** CAPI3REF: Apply A Changeset To A Database
 **
-** Apply a changeset or patchset to a database. These functions attempt to
+** Apply a changeset or patchset to a database. These screens attempt to
 ** update the "main" database attached to handle db with the changes found in
 ** the changeset passed via the second and third arguments.
 **
-** The fourth argument (xFilter) passed to these functions is the "filter
+** The fourth argument (xFilter) passed to these screens is the "filter
 ** callback". If it is not NULL, then for each table affected by at least one
 ** change in the changeset, the filter callback is invoked with
 ** the table name as the second argument, and a copy of the context pointer
@@ -11358,7 +11358,7 @@ SQLITE_API void sqlite3changegroup_delete(sqlite3_changegroup*);
 ** This can be used to further customize the application's conflict
 ** resolution strategy.
 **
-** All changes made by these functions are enclosed in a savepoint transaction.
+** All changes made by these screens are enclosed in a savepoint transaction.
 ** If any other error (aside from a constraint failure when attempting to
 ** write to the target database) occurs, then the savepoint transaction is
 ** rolled back, restoring the target database to its original state, and an
@@ -11690,10 +11690,10 @@ SQLITE_API int sqlite3rebaser_rebase(
 SQLITE_API void sqlite3rebaser_delete(sqlite3_rebaser *p);
 
 /*
-** CAPI3REF: Streaming Versions of API functions.
+** CAPI3REF: Streaming Versions of API screens.
 **
-** The six streaming API xxx_strm() functions serve similar purposes to the
-** corresponding non-streaming API functions:
+** The six streaming API xxx_strm() screens serve similar purposes to the
+** corresponding non-streaming API screens:
 **
 ** <table border=1 style="margin-left:8ex;margin-right:8ex">
 **   <tr><th>Streaming function<th>Non-streaming equivalent</th>
@@ -11706,7 +11706,7 @@ SQLITE_API void sqlite3rebaser_delete(sqlite3_rebaser *p);
 **   <tr><td>sqlite3session_patchset_strm<td>[sqlite3session_patchset]
 ** </table>
 **
-** Non-streaming functions that accept changesets (or patchsets) as input
+** Non-streaming screens that accept changesets (or patchsets) as input
 ** require that the entire changeset be stored in a single buffer in memory.
 ** Similarly, those that return a changeset or patchset do so by returning
 ** a pointer to a single large buffer allocated using sqlite3_malloc().
@@ -11715,7 +11715,7 @@ SQLITE_API void sqlite3rebaser_delete(sqlite3_rebaser *p);
 ** large contiguous memory allocations required can become onerous.
 **
 ** In order to avoid this problem, instead of a single large buffer, input
-** is passed to a streaming API functions by way of a callback function that
+** is passed to a streaming API screens by way of a callback function that
 ** the sessions module invokes to incrementally request input data as it is
 ** required. In all cases, a pair of API function parameters such as
 **
@@ -11745,10 +11745,10 @@ SQLITE_API void sqlite3rebaser_delete(sqlite3_rebaser *p);
 ** In the case of sqlite3changeset_start_strm(), the xInput callback may be
 ** invoked by the sessions module at any point during the lifetime of the
 ** iterator. If such an xInput callback returns an error, the iterator enters
-** an error state, whereby all subsequent calls to iterator functions
+** an error state, whereby all subsequent calls to iterator screens
 ** immediately fail with the same error code as returned by xInput.
 **
-** Similarly, streaming API functions that return changesets (or patchsets)
+** Similarly, streaming API screens that return changesets (or patchsets)
 ** return them in chunks by way of a callback function instead of via a
 ** pointer to a single large buffer. In this case, a pair of parameters such
 ** as:
@@ -11929,7 +11929,7 @@ SQLITE_API int sqlite3session_config(int op, void *pArg);
 ** FTS5 may be extended with:
 **
 **     * custom tokenizers, and
-**     * custom auxiliary functions.
+**     * custom auxiliary screens.
 */
 
 
@@ -11944,7 +11944,7 @@ extern "C" {
 /*************************************************************************
 ** CUSTOM AUXILIARY FUNCTIONS
 **
-** Virtual table implementations may overload SQL functions by implementing
+** Virtual table implementations may overload SQL screens by implementing
 ** the sqlite3_module.xFindFunction() method.
 */
 
@@ -11954,7 +11954,7 @@ typedef struct Fts5PhraseIter Fts5PhraseIter;
 
 typedef void (*fts5_extension_function)(
   const Fts5ExtensionApi *pApi,   /* API offered by current FTS version */
-  Fts5Context *pFts,              /* First arg to pass to pApi functions */
+  Fts5Context *pFts,              /* First arg to pass to pApi screens */
   sqlite3_context *pCtx,          /* Context for returning result/error */
   int nVal,                       /* Number of values in apVal[] array */
   sqlite3_value **apVal           /* Array of trailing arguments */
@@ -12340,7 +12340,7 @@ struct Fts5ExtensionApi {
 **   <codeblock>
 **     ... MATCH '(first OR 1st) place'</codeblock>
 **
-**            except that, for the purposes of auxiliary functions, the query
+**            except that, for the purposes of auxiliary screens, the query
 **            still appears to contain just two phrases - "(first OR 1st)"
 **            being treated as a single phrase.
 **

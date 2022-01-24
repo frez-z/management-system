@@ -1,6 +1,7 @@
 // Created by Farez
 
 #include <conio.h>
+#include <stdlib.h>
 
 #include "resource/database.h"
 #include "resource/file_checker.h"
@@ -12,6 +13,7 @@
 void runSetup();
 
 int main() {
+    system("cls");
     // testing creation file
     test_int(createDirIfNotExist(DB_DIR), 0, "CreateDirectory");
 

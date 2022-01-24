@@ -3,11 +3,6 @@
 #include <stdio.h>
 #include "test.h"
 
-#define BR "\n"
-#define RED "\033[91m"
-#define GREEN "\033[92m"
-#define RST "\033[0m"
-
 unsigned int id = 1;
 
 void test_int(int actual, int expected, char* name){
